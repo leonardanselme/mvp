@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --secondary: #2563eb;
+  --secondary-hover: #1d4ed8;
+  --danger: #dc2626;
+  --warning: #facc15;
+  --light: #f9fafb;
+  --dark: #1f2937;
+}
+
+body {
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500;
+}
