@@ -1,5 +1,6 @@
 //Formulaire de connection via email, ou Google
 //IL VA FALLOIR SUPPRIMER UN DES 2 COMPOSANTS LOGINFORM, VOIR L
+//TEST
 
 "use client";
 
