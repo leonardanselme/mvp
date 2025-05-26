@@ -3,7 +3,6 @@
 //import { createClient } from "@/lib/supabase/server";
 
 import { Journal } from "@/components/Journal";
-import { Carnet } from "@/components/Carnet";
 
 export function Page() {
   return (
@@ -12,10 +11,17 @@ export function Page() {
         Votre Tableau de Bord Santé
       </h1>
 
-      {/* Layout en grille pour les deux sections */}
+      {/* Layout en grille pour les sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-        {/* Colonne 1: Carnet */}
-        <Carnet />
+        {/* Espace réservé pour le futur composant Carnet */}
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            Carnet d&apos;Entraînement
+          </h2>
+          <p className="text-gray-500">
+            Le composant Carnet sera réimplémenté prochainement.
+          </p>
+        </div>
 
         {/* Colonne 2: Journal */}
         <Journal />
