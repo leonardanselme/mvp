@@ -370,3 +370,127 @@ export const MOCK_WORKOUTS: Workout[] = [
 export const FAVORITE_WORKOUTS = MOCK_WORKOUTS.filter(
   (workout) => workout.is_favorite
 );
+
+// Groupes musculaires disponibles
+export const MUSCLE_GROUPS = [
+  "Pectoraux",
+  "Dos",
+  "Épaules",
+  "Biceps",
+  "Triceps",
+  "Jambes",
+  "Quadriceps",
+  "Ischio-jambiers",
+  "Fessiers",
+  "Mollets",
+  "Abdominaux",
+  "Obliques",
+  "Core",
+  "Trapèzes",
+  "Avant-bras",
+  "Cardio",
+  "Full body",
+];
+
+// Séances favorites templates
+export const FAVORITE_WORKOUT_TEMPLATES = [
+  {
+    id: "template-1",
+    name: "Push Day",
+    exercises: [
+      {
+        exercise_id: "1",
+        exercise_name: "Développé couché",
+        sets: [
+          { set_number: 1, weight: 80, reps: 8, rpe: 8 },
+          { set_number: 2, weight: 80, reps: 8, rpe: 8 },
+          { set_number: 3, weight: 80, reps: 7, rpe: 9 },
+        ],
+      },
+      {
+        exercise_id: "14",
+        exercise_name: "Développé militaire",
+        sets: [
+          { set_number: 1, weight: 50, reps: 10, rpe: 7 },
+          { set_number: 2, weight: 50, reps: 10, rpe: 8 },
+          { set_number: 3, weight: 50, reps: 9, rpe: 9 },
+        ],
+      },
+      {
+        exercise_id: "3",
+        exercise_name: "Dips",
+        sets: [
+          { set_number: 1, weight: 0, reps: 12, rpe: 7 },
+          { set_number: 2, weight: 0, reps: 10, rpe: 8 },
+          { set_number: 3, weight: 0, reps: 8, rpe: 9 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "template-2",
+    name: "Pull Day",
+    exercises: [
+      {
+        exercise_id: "7",
+        exercise_name: "Soulevé de terre",
+        sets: [
+          { set_number: 1, weight: 100, reps: 5, rpe: 8 },
+          { set_number: 2, weight: 100, reps: 5, rpe: 9 },
+          { set_number: 3, weight: 100, reps: 4, rpe: 9 },
+        ],
+      },
+      {
+        exercise_id: "5",
+        exercise_name: "Tractions",
+        sets: [
+          { set_number: 1, weight: 0, reps: 8, rpe: 7 },
+          { set_number: 2, weight: 0, reps: 7, rpe: 8 },
+          { set_number: 3, weight: 0, reps: 6, rpe: 9 },
+        ],
+      },
+      {
+        exercise_id: "6",
+        exercise_name: "Rowing barre",
+        sets: [
+          { set_number: 1, weight: 60, reps: 10, rpe: 7 },
+          { set_number: 2, weight: 60, reps: 10, rpe: 8 },
+          { set_number: 3, weight: 60, reps: 9, rpe: 8 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "template-3",
+    name: "Legs Day",
+    exercises: [
+      {
+        exercise_id: "9",
+        exercise_name: "Squat",
+        sets: [
+          { set_number: 1, weight: 90, reps: 8, rpe: 8 },
+          { set_number: 2, weight: 90, reps: 8, rpe: 8 },
+          { set_number: 3, weight: 90, reps: 7, rpe: 9 },
+        ],
+      },
+      {
+        exercise_id: "11",
+        exercise_name: "Fentes",
+        sets: [
+          { set_number: 1, weight: 20, reps: 12, rpe: 7 },
+          { set_number: 2, weight: 20, reps: 12, rpe: 8 },
+          { set_number: 3, weight: 20, reps: 10, rpe: 8 },
+        ],
+      },
+      {
+        exercise_id: "12",
+        exercise_name: "Leg Curl",
+        sets: [
+          { set_number: 1, weight: 40, reps: 12, rpe: 7 },
+          { set_number: 2, weight: 40, reps: 12, rpe: 8 },
+          { set_number: 3, weight: 40, reps: 11, rpe: 8 },
+        ],
+      },
+    ],
+  },
+];
