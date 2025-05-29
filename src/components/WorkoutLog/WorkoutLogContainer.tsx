@@ -2,25 +2,25 @@
 
 import { useState } from "react";
 import { Plus, BarChart3, BookOpen } from "lucide-react";
-import { CarnetOverview } from "@/components/Carnet/CarnetOverview";
-import { AddWorkout } from "@/components/Carnet/AddWorkout";
-import { ProgressView } from "@/components/Carnet/ProgressView";
+import { LogView } from "./LogView/LogView";
+import { AddWorkoutView } from "./AddWorkout/AddWorkoutView";
+import { ExerciseProgressView } from "./ExerciseProgress/ExerciseProgressView";
 
 type CarnetView = "overview" | "add" | "progress";
 
-export function Carnet() {
+export function WorkoutLogContainer() {
   const [currentView, setCurrentView] = useState<CarnetView>("overview");
 
   const renderView = () => {
     switch (currentView) {
       case "overview":
-        return <CarnetOverview onAddWorkout={() => setCurrentView("add")} />;
+        return <LogView onAddWorkout={() => setCurrentView("add")} />;
       case "add":
-        return <AddWorkout />;
+        return <AddWorkoutView />;
       case "progress":
-        return <ProgressView />;
+        return <ExerciseProgressView />;
       default:
-        return <CarnetOverview onAddWorkout={() => setCurrentView("add")} />;
+        return <LogView onAddWorkout={() => setCurrentView("add")} />;
     }
   };
 

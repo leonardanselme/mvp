@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Journal } from "@/components/Journal";
-import { Carnet } from "@/components/Carnet";
+import { WorkoutLogContainer } from "@/components/WorkoutLog";
 
 export function Page() {
   const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +69,7 @@ export function Page() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Composant Carnet d'Entraînement */}
         <div className="bg-white rounded-lg shadow overflow-hidden h-[600px]">
-          <Carnet />
+          <WorkoutLogContainer />
         </div>
 
         {/* Colonne 2: Journal */}
