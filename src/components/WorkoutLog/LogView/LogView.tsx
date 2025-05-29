@@ -2,7 +2,6 @@
 
 import { Calendar, Dumbbell, TrendingUp, Plus } from "lucide-react";
 import { MOCK_WORKOUTS } from "@/data/workout-mock";
-import { WorkoutCard } from "./WorkoutCard";
 
 interface LogViewProps {
   onAddWorkout: () => void;
@@ -41,11 +40,6 @@ export function LogView({ onAddWorkout }: LogViewProps) {
       }, 0)
     );
   }, 0);
-
-  // Trier les séances par date (plus récentes en premier)
-  const recentWorkouts = [...MOCK_WORKOUTS]
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .slice(0, 5);
 
   return (
     <div className="p-4">
@@ -116,27 +110,6 @@ export function LogView({ onAddWorkout }: LogViewProps) {
         <Plus className="w-5 h-5" />
         Nouvelle séance
       </button>
-
-      {/* Dernières séances */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Dernières séances
-        </h2>
-
-        {recentWorkouts.length === 0 ? (
-          <div className="text-center py-8">
-            <Dumbbell className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500">Aucune séance enregistrée</p>
-            <p className="text-sm text-gray-400">Commencez dès maintenant !</p>
-          </div>
-        ) : (
-          <div>
-            {recentWorkouts.map((workout) => (
-              <WorkoutCard key={workout.id} workout={workout} />
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }

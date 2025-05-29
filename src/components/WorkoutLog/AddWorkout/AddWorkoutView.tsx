@@ -1,11 +1,54 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Trash2 } from "lucide-react";
 import { WorkoutForm } from "./WorkoutForm";
 import { ExerciseList } from "./ExerciseList";
 import { AddExerciseModal } from "./AddExerciseModal";
-import { MOCK_EXERCISES } from "@/data/workout-mock";
-import { WorkoutExercise, WorkoutSet, Exercise } from "@/types/workout";
+import { WorkoutCard } from "../LogView/WorkoutCard";
+import { MOCK_EXERCISES, MOCK_WORKOUTS } from "@/data/workout-mock";
+import {
+  WorkoutExercise,
+  WorkoutSet,
+  Exercise,
+  Workout,
+} from "@/types/workout";
+
+interface DeleteConfirmationModalProps {
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function DeleteConfirmationModal({
+  onConfirm,
+  onCancel,
+}: DeleteConfirmationModalProps) {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+        <h3 className="text-lg font-semibold mb-4">Supprimer la séance</h3>
+        <p className="text-gray-600 mb-6">
+          Êtes-vous sûr de vouloir supprimer cette séance ? Cette action est
+          irréversible.
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={onCancel}
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+          >
+            Annuler
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          >
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 interface WorkoutInProgress {
   name: string;
@@ -13,9 +56,13 @@ interface WorkoutInProgress {
   exercises: WorkoutExercise[];
 }
 
+interface AddWorkoutViewProps {
+  onWorkoutSaved?: () => void;
+}
+
 type StartMode = "favorite" | "scratch" | null;
 
-export function AddWorkoutView() {
+export function AddWorkoutView({ onWorkoutSaved }: AddWorkoutViewProps) {
   const [workout, setWorkout] = useState<WorkoutInProgress>({
     name: "",
     date: new Date(),
@@ -32,6 +79,10 @@ export function AddWorkoutView() {
     name: "",
     muscle_groups: [] as string[],
   });
+
+  // States pour la gestion de la suppression
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [workoutToDelete, setWorkoutToDelete] = useState<string | null>(null);
 
   // Auto-generate workout name based on date
   useEffect(() => {
@@ -156,11 +207,44 @@ export function AddWorkoutView() {
     }));
   };
 
+  const handleDeleteWorkout = (workoutId: string) => {
+    setWorkoutToDelete(workoutId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (workoutToDelete) {
+      // Supprimer de MOCK_WORKOUTS
+      const index = MOCK_WORKOUTS.findIndex((w) => w.id === workoutToDelete);
+      if (index !== -1) {
+        MOCK_WORKOUTS.splice(index, 1);
+      }
+    }
+    setShowDeleteModal(false);
+    setWorkoutToDelete(null);
+  };
+
   const saveWorkout = () => {
-    // TODO: Implement save logic
-    console.log("Saving workout:", workout);
-    // Show favorite popup if it's a new combination
-    alert("Séance sauvegardée ! (Fonctionnalité à implémenter)");
+    // Générer un ID unique
+    const newWorkout: Workout = {
+      id: `workout-${Date.now()}`,
+      name: workout.name,
+      date: workout.date,
+      exercises: workout.exercises,
+      is_favorite: false,
+      created_at: new Date(),
+    };
+
+    // Ajouter à MOCK_WORKOUTS (au début du tableau)
+    MOCK_WORKOUTS.unshift(newWorkout);
+
+    // Message de confirmation
+    alert("Séance sauvegardée avec succès !");
+
+    // Retour automatique à la vue overview
+    if (onWorkoutSaved) {
+      onWorkoutSaved();
+    }
   };
 
   const isWorkoutValid = () => {
@@ -175,11 +259,53 @@ export function AddWorkoutView() {
   // Rendu conditionnel selon startMode
   if (startMode === null) {
     return (
-      <WorkoutForm
-        workout={workout}
-        onWorkoutChange={setWorkout}
-        onStartMode={setStartMode}
-      />
+      <div className="h-full flex flex-col">
+        <WorkoutForm
+          workout={workout}
+          onWorkoutChange={setWorkout}
+          onStartMode={setStartMode}
+        />
+
+        {/* NOUVELLE SECTION : Liste des séances */}
+        <div className="flex-1 overflow-y-auto p-4 border-t">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Mes séances ({MOCK_WORKOUTS.length})
+          </h2>
+
+          {MOCK_WORKOUTS.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Aucune séance enregistrée</p>
+              <p className="text-sm text-gray-400">
+                Créez votre première séance !
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {MOCK_WORKOUTS.map((workoutItem) => (
+                <div key={workoutItem.id} className="relative group">
+                  <WorkoutCard workout={workoutItem} />
+
+                  {/* Bouton supprimer */}
+                  <button
+                    onClick={() => handleDeleteWorkout(workoutItem.id)}
+                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Modal suppression si nécessaire */}
+        {showDeleteModal && (
+          <DeleteConfirmationModal
+            onConfirm={confirmDelete}
+            onCancel={() => setShowDeleteModal(false)}
+          />
+        )}
+      </div>
     );
   }
 

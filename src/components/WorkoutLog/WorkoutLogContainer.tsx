@@ -16,7 +16,9 @@ export function WorkoutLogContainer() {
       case "overview":
         return <LogView onAddWorkout={() => setCurrentView("add")} />;
       case "add":
-        return <AddWorkoutView />;
+        return (
+          <AddWorkoutView onWorkoutSaved={() => setCurrentView("overview")} />
+        );
       case "progress":
         return <ExerciseProgressView />;
       default:
